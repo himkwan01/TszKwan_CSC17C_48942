@@ -13,29 +13,39 @@
 using namespace std;
 
 //User Libraries
-#include "Test.h"
+//#include "Test.h"
 #include "TemplateT.h"
 //Global Constants
 
 //Function Prototypes
-//int *filAray(int);
-//int **filAray(int*,int);
-//void prntAry(int *,int);
-//void prntAry(int **,int *,int);
-//void destroy(int **,int *,int);
+int *filAray(int);
+int **filAray(int*,int);
+void prntAry(int *,int);
+void prntAry(int **,int *,int);
+void destroy(int **,int *,int);
 
 
 //Execution Begins Here
 int main(){
   int num=10;
-    //Initialize the random number generator
-    srand(static_cast<unsigned int>(time(0)));
-    Test test(num);
-    cout<<"Class object created\n";
+//    //Initialize the random number generator
+//    srand(static_cast<unsigned int>(time(0)));
+//    int col=10;
+//    //Fill the arrays
+//    int *d1ary=filAray(col);
+//    int **d2ary=filAray(d1ary,col);
+//    //Print the arrays
+//    prntAry(d1ary,col);
+//    prntAry(d2ary,d1ary,col);
+//    //Delete the dynamic arrays
+//    destroy(d2ary,d1ary,col);
+
+    TemplateT<int> test(num);
+    cout<<"Template <int> created\n";
     test.prnt1dAry();
     test.prnt2dAry();
     TemplateT<float> tempT(num);
-    cout<<"Template class object created\n";
+    cout<<"Template <float> created\n";
     cout<<showpoint<<fixed<<setprecision(2);
     tempT.prnt1dAry();
     tempT.prnt2dAry();
