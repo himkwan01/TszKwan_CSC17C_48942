@@ -30,7 +30,7 @@ public:
   Vect(int size);
   //constructor size and initial value
   Vect(int size, T data);
-//  Vect(Vect<T>);
+  Vect(const Vect<T>&);
   //Destructor
   virtual~Vect();
   // overloading []operator
@@ -43,6 +43,7 @@ public:
   T rear();
   void insert_after(int index, T data);
   void insert_before(int index, T data);
+  void extract(T data);
 private:
   struct Node{
     T data;     //store value
@@ -73,6 +74,7 @@ Vect<T>::Vect(int size){
     for(int i=1;i<size;i++){
       last->next=new Node;
       last=last->next;
+      last->next=NULL;
     }
   }
   else{
@@ -95,10 +97,32 @@ Vect<T>::Vect(int size, T data){
     last->next=NULL;
   }
 }
-//template <class T>
-//Vect<T>::Vect(Vect<T> a){
-//  this=a;
-//}
+template <class T>
+//won't create a temp a to copy
+Vect<T>::Vect(const Vect<T> &a){
+  Node *temp;
+//  cout<<"copy constructor start\n";
+//  cout<<a.size<<endl;
+  this->size=a.size;
+  if(size>0){
+//    cout<<"size>0\n";
+    head = new Node;
+    head->next=NULL;
+    last=head;
+    for(int i=1;i<size;i++){
+      last->next = new Node;
+      last=last->next;
+    }
+    worker=head;
+    temp=a.head;
+    for(int i=0;i<size;i++){
+      worker->data=temp->data;
+      worker=worker->next;
+      temp=temp->next;
+    }
+  }
+  else Vect();
+}
 template <class T>
 Vect<T>::~Vect(){
 if(size>0){
@@ -207,6 +231,32 @@ void Vect<T>::insert_before(int index, T data){
       worker->next=temp;
     }
     size++;
+  }
+}
+template <class T>
+void Vect<T>::extract(T data){
+  worker=head;
+  Node *temp;
+  for(;worker->next!=NULL;){
+//    cout<<"for loop\n";
+//    cout<<worker->data<<endl;
+//    worker->next=worker->next->next;
+//    cout<<"next data "<<worker->next->data<<endl;
+    if(worker->next->data==data){ //if data 2 == data
+//      cout<<"if statement\n";
+      temp=worker->next;
+      worker->next=temp->next;
+      delete temp;
+      size--;
+    }
+    else
+      worker=worker->next;
+  }
+  if(head->data==data){
+    worker=head->next;
+    delete head;
+    head=worker;
+    size--;
   }
 }
 
