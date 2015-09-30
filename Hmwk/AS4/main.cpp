@@ -16,7 +16,12 @@ int main(int argc, char** argv) {
   cout<<"Create empty vector\n";
   Vect<int> empty;
   cout<<"empty vector size = "<<empty.getSize()<<"\n\n";
-  
+  cout<<"push back 0\n";
+  empty.push_back(0);
+  cout<<"show empty vector\n";
+  for(int i=0;i<empty.getSize();i++){
+    cout<<empty[i]<<endl;
+  }
   cout<<"Create vector with size = 4\n";
   Vect<int> test(4);
   cout<<"vector actual size = "<<test.getMaxSize()<<endl;
@@ -30,7 +35,7 @@ int main(int argc, char** argv) {
     cout<<test[i]<<endl;
   }
   cout<<endl;
-  test.pop_up();
+  test.pop_back();
   cout<<"pop up\n";
   cout<<"current size = "<<test.getSize()<<endl;
   cout<<"size = "<<test.getMaxSize()<<endl;
@@ -61,7 +66,7 @@ int main(int argc, char** argv) {
   for(int i=0;i<test2.getSize();i++){
     cout<<test2[i]<<endl;
   }
-  test2.pop_up();
+  test2.pop_back();
   cout<<"pop up\n";
   cout<<"current size = "<<test2.getSize()<<endl;
   cout<<"size = "<<test2.getMaxSize()<<endl;

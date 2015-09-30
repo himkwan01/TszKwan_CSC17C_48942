@@ -142,6 +142,7 @@ void SimpleVector<T>::push_back(T a){
   arraySize+=1;
   //double the size and copy all the value
   if(arraySize>allocateSize){
+    if(allocateSize==0)allocateSize=1;
     allocateSize*=2;
     T *temp = new T[allocateSize];
     for(int i=0;i<arraySize-1;i++){

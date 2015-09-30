@@ -10,7 +10,14 @@
 
 #include "bits/stdc++.h"
 using namespace std;
-
+/*
+ * First and Last Functions
+ * Prepend
+ * Append
+ * Copy Constructor and Assignment Operator
+ * Extract
+ * InsertAfter and InsertBefore
+ */
 //第一個node必需分開建立
 template <class T>
 class Vect{
@@ -18,23 +25,24 @@ public:
   //default constructor
   Vect(){
     size=0;
-    current_size=0;
   }
   //constructor only size
   Vect(int size);
   //constructor size and initial value
   Vect(int size, T data);
+//  Vect(Vect<T>);
   //Destructor
-  ~Vect();
+  virtual~Vect();
   // overloading []operator
   T &operator[](const int &index);
-  void push_back(T data);
-  void pop_back();
-  //get current size
-  int getSize(){return current_size;}
+  void append(T data);
+  void prepend();
   //get actual size
-  int getMaxSize(){return size;}
-  
+  int getSize(){return size;}
+  T first();
+  T rear();
+  void insert_after(int index, T data);
+  void insert_before(int index, T data);
 private:
   struct Node{
     T data;     //store value
@@ -44,7 +52,6 @@ private:
   Node *last;        //store last node address 附加時不用再loop
   Node *worker;      //current node address
   int size;          //num of nodes created
-  int current_size; //
   void subError(){
     cout<<"ERROR: Subscript out of range.\n";
     exit(EXIT_FAILURE);
@@ -58,7 +65,6 @@ template <class T>
 Vect<T>::Vect(int size){
   if(size>0){
     this->size=size;
-    current_size=size;
     //create first Node
     head = new Node;
     head->next=NULL; //set next address to null
@@ -76,7 +82,6 @@ Vect<T>::Vect(int size){
 template <class T>
 Vect<T>::Vect(int size, T data){
   this->size=size;
-  current_size=size;
   //create first Node
   head = new Node;
   head->data=data;
@@ -90,6 +95,10 @@ Vect<T>::Vect(int size, T data){
     last->next=NULL;
   }
 }
+//template <class T>
+//Vect<T>::Vect(Vect<T> a){
+//  this=a;
+//}
 template <class T>
 Vect<T>::~Vect(){
 if(size>0){
@@ -105,7 +114,7 @@ if(size>0){
 }
 template <class T>
 T &Vect<T>::operator [](const int& index){
-  if(index<0 || index>=current_size){
+  if(index<0 || index>=size){
     subError();
   }
   else{
@@ -117,53 +126,89 @@ T &Vect<T>::operator [](const int& index){
   }
 }
 template <class T>
-void Vect<T>::push_back(T data){
-  if(current_size<size){
-//    cout<<"change value only\n";
-//      cout<<"current last value = "<<last->data<<endl;
-    last=last->next;
-    last->data=data;
-  }
-  //create more
-  else{
-    if(size==0){
-      size=10;        //create 10
-      current_size=0; //will add one at the end;
-      head = new Node;  //create the first Node
-      head->data=data;
-      last=head;
-    }
-    else{
-//      cout<<"double size\n";
-      //add the first one and input the value
-      last->next = new Node;
-      last=last->next;  //update last address
-      last->data=data;
-    }
-    worker=last;      //copy last address to create more
-    //add size-1 more at the end
-    for(int i=1;i<size;i++){
-      //last should be the vect[current_address] address
-      worker->next = new Node();
-      worker=worker->next;
-    }
-    if(current_size>1)size*=2;    //only double if not the first one
-  }
-  //update current_size
-  current_size++;
+void Vect<T>::append(T data){
+  cout<<"append function/n";
+  last->next=new Node;
+  last=last->next;
+  last->next=NULL;
+  last->data=data;
+  size++;
 }
 template <class T>
-void Vect<T>::pop_back(){
-//    cout<<"pop up funtion\n";
-  if(current_size>0){
-    current_size--;
-    //update last
-
-    last=head;
-    for(int i=0;i<current_size-1;i++){
-      last=last->next;
+void Vect<T>::prepend(){
+  cout<<"prepend function\n";
+  if(size>0){
+    size--;
+    worker=head;
+    for(int i=0;i<size-1;i++){
+      worker=worker->next;
     }
+    delete worker->next;
+  }
+  else empError();
+}
+template <class T>
+T Vect<T>::first(){
+  return head->data;
+}
+template <class T>
+T Vect<T>::rear(){
+  return last->data;
+}
+template <class T>
+void Vect<T>::insert_after(int index, T data){
+  if(index>size-1||index<0){
+    empError();
+  }
+  else{
+    worker=head;
+    for(int i=0;i<index;i++){
+      worker=worker->next;
+    }
+    if(index==size-1){
+      last=worker;
+      worker->next = new Node;
+      worker=worker->next;
+      worker->data=data;
+      last=worker;
+    }
+    else{
+      //save current worker->next
+      Node *temp=worker->next;
+      worker->next = new Node;
+      worker=worker->next;
+      worker->data=data;
+      worker->next=temp;
+    }
+    size++;
   }
 }
+template <class T>
+void Vect<T>::insert_before(int index, T data){
+  if(index>size-1||index<0){
+    empError();
+  }
+  else{
+    if(index==0){
+      Node *temp=head;
+      head = new Node;
+      head->data=data;
+      head->next=temp;
+    }
+    else{
+      worker=head;
+      for(int i=0;i<index-2;i++){
+        worker=worker->next;
+      }
+      Node *temp=worker->next;
+      worker->next=new Node;
+      worker=worker->next;
+      worker->data=data;
+      worker->next=temp;
+    }
+    size++;
+  }
+}
+
 #endif	/* VECTOR_LINKED_LIST_H */
 
