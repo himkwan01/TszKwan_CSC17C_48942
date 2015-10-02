@@ -10,7 +10,7 @@
 #include "bits/stdc++.h"
 class LnkLst{
 public:
-  LnkLst();
+  LnkLst(){size=0;}
   LnkLst(int);
   LnkLst(int, int);
 private:
@@ -33,7 +33,8 @@ LnkLst::LnkLst(int size, bool doubly){
     worker->prev=NULL;
     for(int i=1;i<size;i++){
       worker->next = new Node;
-      worker->next->prev=worker;  //point to previous
+      //point to previous
+      doubly?worker->next->prev=worker:worker->next->prev=NULL;  
       worker=worker->next;
     }
     doubly?worker->next=NULL:worker->next=head;
