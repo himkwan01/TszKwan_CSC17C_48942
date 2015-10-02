@@ -14,15 +14,16 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-  Minesweeper test(3,3);
-//  for(int i=0;i<9;i++){
-//    test[i]=i;
-//  }
-  for(int i=0;i<9;i++){
-    cout<<test[i]<<" ";
+  Minesweeper test(4,4, true);
+  for(int i=0;i<test.getRow();i++){
+    for(int j=0;j<test.getCol();j++){
+      cout<<test[i*test.getCol()+j]<<" ";
+    }
+    cout<<endl;
   }
-  cout<<endl<<test.top(3)<<endl;
-  cout<<test.bottom(3)<<endl;
+  cout<<endl;
+  cout<<"test[5] top =  "<<test.top(5)<<endl;
+  cout<<"test[5] bottom = "<<test.bottom(5)<<endl;
   return 0;
 }
 
