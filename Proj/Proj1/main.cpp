@@ -14,10 +14,13 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-  Minesweeper test(4,4, true);
-  for(int i=0;i<test.getRow();i++){
-    for(int j=0;j<test.getCol();j++){
-      cout<<test[i*test.getCol()+j]<<" ";
+  Minesweeper test(4,4,1,1);
+//  ChessBoard a(1000,1000);
+  int row=test.getRow();
+  int col=test.getCol();
+  for(int i=0;i<row;i++){
+    for(int j=0;j<col;j++){
+      cout<<test[i*col+j]<<" ";
     }
     cout<<endl;
   }
