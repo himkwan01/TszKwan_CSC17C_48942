@@ -4,17 +4,20 @@
  *
  * Created on October 1, 2015, 10:38 PM
  */
-
+/* 
+ * single player normal game size 16*30( mine = 99)
+ * 
+ */
 #include <cstdlib>
 #include <iostream>
 #include "Minesweeper.h"
 using namespace std;
 
-/*
- * 
- */
+//function prototype
+void show(Minesweeper &, int index, int position);
+
 int main(int argc, char** argv) {
-  Minesweeper test(4,4,1,1);
+  Minesweeper test(16,30,1,1);
 //  ChessBoard a(1000,1000);
   int row=test.getRow();
   int col=test.getCol();
@@ -25,8 +28,20 @@ int main(int argc, char** argv) {
     cout<<endl;
   }
   cout<<endl;
-  cout<<"test[5] top =  "<<test.top(5)<<endl;
-  cout<<"test[5] bottom = "<<test.bottom(5)<<endl;
+  //show(test, 5, 1);
+  show(test, 5, 2);
   return 0;
 }
 
+void show(Minesweeper &obj, int index, int position){
+  cout<<"test["<<index<<"] ";
+  switch(position){
+  case 1:
+    cout<<"top = "<<obj.top(index);break;
+  case 2:
+    cout<<"bottom = "<<obj.bottom(index);break;
+  default:
+    cout<<"Error\n";break;
+  }
+  cout<<endl;
+}

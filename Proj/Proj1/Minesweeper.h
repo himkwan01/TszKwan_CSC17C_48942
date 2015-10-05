@@ -10,17 +10,26 @@
 #include "bits/stdc++.h"
 using namespace std;
 
+/**
+ * Minesweeper version 1
+ * single player
+ * normal game mode 
+ * only expert level 
+ * size = 16x30
+ * mine = 99
+ */
+
 class Minesweeper {
 private:
-
   struct Node {
     int data;
+    char cdata;
     Node *next;
     Node *prev;
     Node *up;
     Node *down;
 
-    Node() : data(0), next(NULL), prev(NULL), up(NULL), down(NULL) {
+    Node() : data(0), cdata('0'),next(NULL), prev(NULL), up(NULL), down(NULL) {
     }
   };
   int size;
@@ -31,21 +40,53 @@ private:
   Node *temp;
   Node *work;
 public:
-
-  Minesweeper() {
-  };
-  Minesweeper(int, int);
-  Minesweeper(int, int, bool);
+  //default constructor
+  Minesweeper() {};
+  /**
+   * Constructor version 1
+   * doubly linked list
+   * only first col has vertical pointers connected
+   * @param row
+   * @param col
+   */
+  Minesweeper(int row, int col);
+  /**
+   * Constructor version 2
+   * doubly linked list
+   * all node has vertical pointers connected
+   * expand version 1, add one more for loop to link vertically
+   * @param row
+   * @param col
+   * @param dum
+   */
+  Minesweeper(int row, int col, bool dum);
+  /**
+   * Constructor version 3
+   * doubly linked list
+   * do the same thing as version 2
+   * combine for loops together
+   * create and link horizontally and vertically at the same time
+   * @param row
+   * @param col
+   * @param dum1
+   * @param dum2
+   */
   Minesweeper(int, int, int dum1, int dum2);
-
+  /**
+   * generate mines on board
+   * @param number of mines
+   */
+  void genMine(int num);
   const int getSize() {return size;}
-
   const int getRow() {return row; }
-
   const int getCol() {return col;}
+  //overloading operator []
   int &operator[](const int&);
+  //a function to get the value above current index
   int top(int);
+  //a function to get the value under current index
   int bottom(int);
+  //Destructor
   ~Minesweeper();
 
 };
@@ -144,6 +185,17 @@ Minesweeper::Minesweeper(int row, int col, int dum1, int dum2) {
   }
 //  cout<<count<<endl;
 }
+
+void Minesweeper::genMine(int num){
+  int x,y;    //x and y coordinates
+  for(int i=0;i<num;i++){
+    x=rand()%16;
+    y=rand()%30;
+    //how to call itself (this?) obj[x*30+y]
+    //if()
+    [x*col+y]=-1;
+  }
+} 
 
 int &Minesweeper::operator[](const int& index) {
 //  cout<<"call index function\n";
