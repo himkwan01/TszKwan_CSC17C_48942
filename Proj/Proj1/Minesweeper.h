@@ -22,14 +22,14 @@ using namespace std;
 class Minesweeper {
 private:
   struct Node {
-    int data;
-    char cdata;
+    int index;
+    char data;
     Node *next;
     Node *prev;
     Node *up;
     Node *down;
 
-    Node() : data(0), cdata('0'),next(NULL), prev(NULL), up(NULL), down(NULL) {
+    Node() : index(0), data(' '),next(NULL), prev(NULL), up(NULL), down(NULL) {
     }
   };
   int size;
@@ -77,15 +77,19 @@ public:
    * @param number of mines
    */
   void genMine(int num);
-  const int getSize() {return size;}
-  const int getRow() {return row; }
-  const int getCol() {return col;}
+  int getSize() {return size;}
+  int getRow() {return row;}
+  int getCol() {return col;}
   //overloading operator []
-  int &operator[](const int&);
-  //a function to get the value above current index
-  int top(int);
-  //a function to get the value under current index
-  int bottom(int);
+  char &operator[](const int&);
+  char top_left(int index){return operator[](index-col-1);}
+  char top(int index){return operator[](index-col);}
+  char top_right(int index){return operator[](index-col+1);}
+  char left(int index){return operator[](index-1);}
+  char right(int index){return operator[](index+1);}
+  char bottom_left(int index){return operator[](index+col-1);}
+  char bottom(int index){return operator[](index+col);}
+  char bottom_right(int index){return operator[](index+col+1);}
   //Destructor
   ~Minesweeper();
 
@@ -97,18 +101,18 @@ Minesweeper::Minesweeper(int row, int col) {
   this->row = row;
   this->col = col;
   head = last = temp = work = new Node;
-  head->data = 0;
+  head->index = 0;
   for (int i = 1; i < row * col; i++) {
     //    cout<<"for loop i = "<<i<<"\n";
     last->next = new Node;
-    //    cout<<"Create Node "<<last->data+1<<endl;
+    //    cout<<"Create Node "<<last->index+1<<endl;
     last->next->prev = last;
     last = last->next;
-    last->data = i;
-    //    cout<<"last move to "<<last->data<<endl;
+    last->index = i;
+    //    cout<<"last move to "<<last->index<<endl;
     if ((i) % col == 0) {
       //        cout<<"i+1%col==0\n";
-      //      cout<<last->data<<" connect to "<<temp->data<<endl;
+      //      cout<<last->index<<" connect to "<<temp->index<<endl;
       temp->down = last;
       temp->down->up = temp;
       temp = temp->down;
@@ -122,18 +126,18 @@ Minesweeper::Minesweeper(int row, int col, bool dum) {
   this->row = row;
   this->col = col;
   head = last = temp = work = new Node; //create first node
-  head->data = 0; //initial value
+  head->index = 0; //initial value
   for (int i = 1; i < size; i++) {
     //    cout<<"for loop i = "<<i<<"\n";
     last->next = new Node; //create all node
-    //    cout<<"Create Node "<<last->data+1<<endl;
+    //    cout<<"Create Node "<<last->index+1<<endl;
     last->next->prev = last; //connect left and right
     last = last->next;
-    last->data = i;
-    //    cout<<"last move to "<<last->data<<endl;
+    last->index = i;
+    //    cout<<"last move to "<<last->index<<endl;
     if ((i) % col == 0) {
       //        cout<<"i+1%col==0\n";
-      //      cout<<last->data<<" connect to "<<temp->data<<endl;
+      //      cout<<last->index<<" connect to "<<temp->index<<endl;
       temp->down = last;
       temp->down->up = temp;
       temp = temp->down;
@@ -155,13 +159,14 @@ Minesweeper::Minesweeper(int row, int col, bool dum) {
 }
 
 Minesweeper::Minesweeper(int row, int col, int dum1, int dum2) {
+  
   int count=1;
   this->size = row*col;
   this->row = row;
   this->col = col;
   head = last = temp = work = new Node;
-  head->data = 0;
-//  cout << "last = " << last->data << endl;
+  head->index = 0;
+//  cout << "last = " << last->index << endl;
   for (int i = 0; i < row; i++) {
     for (int j = 0; j < col; j++) {
       //j=0
@@ -169,15 +174,15 @@ Minesweeper::Minesweeper(int row, int col, int dum1, int dum2) {
         last->next = new Node;
         count++;
         last->next->prev = last;
-        last = last->next;
-        last->data = (i * col + j);
+        last=last->next;
+        last->index=(i * col + j);
         //        cout<<"i = "<<i<<" j = "<<j<<endl;
-        //        cout<<"last = "<<last->data<<"\n";
+        //        cout<<"last = "<<last->index<<"\n";
         if (i > 0) {
-          //          cout<<"temp = "<<temp->data<<"\n\n";
-          //          cout<<"last = "<<last->data<<endl;
-          temp->down = last;
-          temp->down->up = temp;
+          //          cout<<"temp = "<<temp->index<<"\n\n";
+          //          cout<<"last = "<<last->index<<endl;
+          temp->down=last;
+          temp->down->up=temp;
           temp = temp->next;
         }
       }
@@ -187,42 +192,30 @@ Minesweeper::Minesweeper(int row, int col, int dum1, int dum2) {
 }
 
 void Minesweeper::genMine(int num){
+  srand(time(0));
+  cout<<"genMine\n";
+  cout<<"num = "<<num<<endl;
   int x,y;    //x and y coordinates
+  int index;
   for(int i=0;i<num;i++){
-    x=rand()%16;
-    y=rand()%30;
-    //how to call itself (this?) obj[x*30+y]
-    //if()
-    [x*col+y]=-1;
+    do{
+      x=rand()%16;
+      y=rand()%30;
+      index=x*col+y;
+    }while(operator[](index)!=' ');
+    cout<<"index = "<<index<<endl;
+    operator[](index)='*';
   }
 } 
 
-int &Minesweeper::operator[](const int& index) {
+char &Minesweeper::operator[](const int& index) {
 //  cout<<"call index function\n";
   work = head;
   for (int i = 0; i < index; i++) {
     work = work->next;
   }
-//  cout<<"in function "<<work->data<<endl;
+//  cout<<"in function "<<work->index<<endl;
   return work->data;
-}
-
-int Minesweeper::top(int index) {
-  work = head;
-  for (int i = 0; i < index; i++) {
-    work = work->next;
-  }
-  //  cout<<"work = "<<work->data<<endl;
-  //  cout<<"work up = "<<work->up->data<<endl;
-  return work->up->data;
-}
-
-int Minesweeper::bottom(int index) {
-  work = head;
-  for (int i = 0; i < index; i++) {
-    work = work->next;
-  }
-  return work->down->data;
 }
 
 Minesweeper::~Minesweeper() {
@@ -232,7 +225,7 @@ Minesweeper::~Minesweeper() {
     for(int i=0;i<size-1;i++){
       head=work;
       work=head->next;
-//      cout<<head->data<<endl;
+//      cout<<head->index<<endl;
       delete head;
     }
     delete work;
@@ -240,7 +233,7 @@ Minesweeper::~Minesweeper() {
 //  int count=0;
 //  while (!head == 0) {
 //    work = head->next;
-////    cout<<head->data<<endl;
+////    cout<<head->index<<endl;
 //    delete head;
 //    count++;
 //    head = work;

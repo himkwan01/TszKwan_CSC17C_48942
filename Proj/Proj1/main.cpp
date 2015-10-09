@@ -8,8 +8,7 @@
  * single player normal game size 16*30( mine = 99)
  * 
  */
-#include <cstdlib>
-#include <iostream>
+#include <bits/stdc++.h>
 #include "Minesweeper.h"
 using namespace std;
 
@@ -17,19 +16,23 @@ using namespace std;
 void show(Minesweeper &, int index, int position);
 
 int main(int argc, char** argv) {
-  Minesweeper test(16,30,1,1);
-//  ChessBoard a(1000,1000);
-  int row=test.getRow();
-  int col=test.getCol();
+  int row=16;
+  int col=30;
+  char fake[row][col];
+  Minesweeper test(row,col,1,1);
+  
+  row=test.getRow();
+  col=test.getCol();
+  test.genMine(99);
   for(int i=0;i<row;i++){
     for(int j=0;j<col;j++){
       cout<<test[i*col+j]<<" ";
     }
     cout<<endl;
   }
-  cout<<endl;
-  //show(test, 5, 1);
-  show(test, 5, 2);
+  
+  
+  
   return 0;
 }
 
