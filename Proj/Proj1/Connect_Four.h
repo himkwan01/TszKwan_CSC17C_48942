@@ -49,7 +49,7 @@ public:
    * @param dum
    */
   C4(int row, int col, int dum);
-  ~C4();
+  virtual ~C4();
   int getSize(){return size;}
   int getRow(){return row;}
   int getCol(){return col;}
@@ -63,12 +63,12 @@ public:
   T bottom(int index){return operator[](index+col);}
   T bottom_right(int index){return operator[](index+col+1);}
   void setBoard(int col, bool first);
-//  bool setValid(int row, int col);
+  bool setValid(string);
   bool checkWin(int row, int col);
   void show();
   void chkWin(int cRow, int cCol, int oRow, int oCol, int dir, char a, bool opp);
-//  void setBorad(int row, int col, char a);
   bool getWin(){return win;}
+  C4<T> &operator=(const C4<T>&);
 };
 
 template <class T>
@@ -132,7 +132,7 @@ C4<T>::C4(int row, int col, int dum) {
 }
 
 template <class T>
-C4<T>::~C4(){
+virtual C4<T>::~C4(){
   if(size>0){
     work=head;
     for(int i=0;i<size-1;i++){
@@ -157,8 +157,8 @@ T &C4<T>::operator [](const int &index){
 
 template <class T>
 void C4<T>::setBoard(int col, bool first){
-  cout<<"set board function\n";
-  first?cout<<"true\n":cout<<"false\n";
+//  cout<<"set board function\n";
+//  first?cout<<"true\n":cout<<"false\n";
   int i=0;
   char a;
   while(operator[](i*this->col+col)!=' ')i++;
@@ -175,20 +175,31 @@ void C4<T>::setBoard(int col, bool first){
   chkWin(i, col, i, col, 1, a, false);
 }
 
-//template <class T>
-//bool C4<T>::setValid(int row, int col){
-//  if(operator[](row*this->row+col)==' '){
-//    return true;
-//  }
-//  else{
-//    return false;
-//  }
-//}
+template <class T>
+bool C4<T>::setValid(string tempS){
+//  cout<<"call setValid function\n";
+  if(tempS.length()!=1){
+//    cout<<"length!=1\n";
+    return false;
+  }
+  else if(tempS[0]<'A' || tempS[0]>'G'){
+//    cout<<"out range\n";
+    return false;
+  }
+  else{
+    int i=0;
+    int q=tempS[0]-65;
+    while(operator[](i*col+q)!=' ')i++;
+//    cout<<"i = "<<i<<endl;
+    if(i>row)return false;
+    return true; 
+ }
+}
 
 template <class T>
 void C4<T>::show(){
   cout<<"    ";
-  for(int i=0;i<row;i++){
+  for(int i=0;i<col;i++){
     char temp=i+65;
     cout<<temp<<"   ";
   }
@@ -208,7 +219,7 @@ void C4<T>::show(){
     cout<<endl;
   }
   cout<<"    ";
-  for(int i=0;i<row;i++){
+  for(int i=0;i<col;i++){
     char temp=i+65;
     cout<<temp<<"   ";
   }
@@ -218,39 +229,39 @@ void C4<T>::show(){
 template <class T>
 void C4<T>::chkWin(int cRow, int cCol, int oRow, int oCol, 
         int dir, char a, bool opp){
-  cout<<"beginning\n";
-  cout<<cRow<<" "<<cCol<<" "<<oRow<<" "<<oCol<<" "<<dir<<" "<<a<<" "<<opp<<endl;
+//  cout<<"beginning\n";
+//  cout<<cRow<<" "<<cCol<<" "<<oRow<<" "<<oCol<<" "<<dir<<" "<<a<<" "<<opp<<endl;
   if(cRow==oRow && cCol==oCol && opp==false){
-    cout<<"same x-y"<<endl;
-    cout<<cRow<<" "<<cCol<<" "<<oRow<<" "<<oCol<<" "<<dir<<" "<<a<<" "<<opp<<endl;
+//    cout<<"same x-y"<<endl;
+//    cout<<cRow<<" "<<cCol<<" "<<oRow<<" "<<oCol<<" "<<dir<<" "<<a<<" "<<opp<<endl;
     //reset
     count=1;
     win=false;
     //水平
     if(dir==1){
-      cout<<"dir=1\n";
+//      cout<<"dir=1\n";
       if(cCol-1>=0){
-        cout<<"opp=false\n";
+//        cout<<"opp=false\n";
         cCol--;
         opp=false;
       }
       else{
-        cout<<"opp=true\n";
+//        cout<<"opp=true\n";
         cCol++;
         opp=true;
       }
     }
     //左上右下
     else if(dir==2){
-      cout<<"dir=2\n";
+//      cout<<"dir=2\n";
       if(cRow-1>=0 && cCol-1>=0){
-        cout<<"opp=false\n";
+//        cout<<"opp=false\n";
         cRow--;
         cCol--;
         opp=false;
       }
       else{
-        cout<<"opp=true\n";
+//        cout<<"opp=true\n";
         cRow++;
         cCol++;
         opp=true;
@@ -258,42 +269,42 @@ void C4<T>::chkWin(int cRow, int cCol, int oRow, int oCol,
     }
     //上下
     else if(dir==3){
-      cout<<"dir=3\n";
+//      cout<<"dir=3\n";
       if(cRow-1>=0){
-        cout<<"opp=false\n";
+//        cout<<"opp=false\n";
         cRow--;
         opp=false;
       }
       else{
-        cout<<"opp=true\n";
+//        cout<<"opp=true\n";
         cRow++;
         opp=false;
       }
     }
     //右上左下
     else{
-      cout<<"dir=4\n";
+//      cout<<"dir=4\n";
       if(cRow-1>=0 && cCol+1<col){
-        cout<<"opp=false\n";
+//        cout<<"opp=false\n";
         cRow--;
         cCol++;
         opp=false;
       }
       else{
-        cout<<"opp=false\n";
+//        cout<<"opp=false\n";
         cRow++;
         cCol--;
         opp=true;
       }
     }
-    cout<<cRow<<" "<<cCol<<" "<<oRow<<" "<<oCol<<" "<<dir<<" "<<a<<" "<<opp<<endl;
+//    cout<<cRow<<" "<<cCol<<" "<<oRow<<" "<<oCol<<" "<<dir<<" "<<a<<" "<<opp<<endl;
     chkWin(cRow, cCol, oRow, oCol, dir, a, opp);
   }//first move / change direction
   
   //rest move
   else{
     //match
-    cout<<"match\n";
+//    cout<<"match\n";
     if(operator[](cRow*col+cCol)==a){
       count++;
       //terminate win
@@ -406,26 +417,26 @@ void C4<T>::chkWin(int cRow, int cCol, int oRow, int oCol,
     }//rest move match
     //rest move doesn't match
     else{
-      cout<<"not match\n";
+//      cout<<"not match\n";
       if(dir==1){
-        cout<<"dir=1\n";
+//        cout<<"dir=1\n";
         if(!opp){
-          cout<<"!opp\n";
+//          cout<<"!opp\n";
           if(oCol+1<col){
-            cout<<"opp=true\n";
+//            cout<<"opp=true\n";
             opp=true;
             cCol=oCol+1;
           }
           else{
-            cout<<"dir=2\n";
+//            cout<<"dir=2\n";
             oRow=oRow;
             cCol=oCol;
             dir=2;
           }
         }
         else{
-          cout<<"opp\n";
-          cout<<"dir=2, opp=false\n";
+//          cout<<"opp\n";
+//          cout<<"dir=2, opp=false\n";
           opp=false;
           dir=2;
           cRow=oRow;
@@ -486,7 +497,36 @@ void C4<T>::chkWin(int cRow, int cCol, int oRow, int oCol,
   cout<<"";
 }
 
-
+template <class T>
+C4<T> &C4<T>::operator =(const C4<T>& obj){
+  size=obj.getSize();
+  row=obj.getRow();
+  col=obj.getCol();
+  if(obj.getSize()>0){
+    head = last = temp = work = new Node;
+    head->index=0;
+    for(int i=1;i<row*col;i++){
+      last->next = new Node;
+      last->next->prev = last;
+      last = last->next;
+      last->next = i;
+      if((i) % col == 0){
+        temp->down = last;
+        temp->down->up = temp;
+        temp = temp->down;
+      }
+    }
+    last->next=NULL;
+    work=head;
+    obj.work=obj.head;
+    for(int i=0;i<size;i++){
+      work.data=obj.work->data;
+      work=work->next;
+      obj.work=obj.work->next;
+    }
+  }
+  return *this;
+}
 
 #endif	/* CONNECT_FOUR_H */
 

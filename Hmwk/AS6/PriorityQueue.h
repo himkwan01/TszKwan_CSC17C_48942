@@ -18,7 +18,7 @@ class PriorityQueue:public PriorityLnkLst<T>{
 public:
   PriorityQueue():PriorityLnkLst<T>(){}
 //  PriorityQueue(int size):PriorityLnkLst<T>(int size){}
-  void prepend(){
+  void pop(){
     if(this->size>0){
       this->size--;
       if(this->size==0){

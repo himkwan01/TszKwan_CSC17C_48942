@@ -36,8 +36,8 @@ int main(int argc, char** argv) {
   for(int i=0;i<qtest.getSize();i++){
     cout<<qtest[i]<<" ";
   }
-  cout<<"\n\nqueue prepend\n";
-  qtest.prepend();
+  cout<<"\n\nqueue pop\n";
+  qtest.pop();
   cout<<"print queue\n";
   for(int i=0;i<qtest.getSize();i++){
     cout<<qtest[i]<<" ";
@@ -53,8 +53,8 @@ int main(int argc, char** argv) {
   for(int i=0;i<stest.getSize();i++){
     cout<<stest[i]<<" ";
   }
-  cout<<"\n\nstack prepend\n";
-  stest.prepend();
+  cout<<"\n\nstack pop\n";
+  stest.pop();
   cout<<"print stack\n";
   for(int i=0;i<stest.getSize();i++){
     cout<<stest[i]<<" ";
@@ -86,15 +86,15 @@ int main(int argc, char** argv) {
   
   cout<<"Create empty priority linked list\n";
   PriorityLnkLst<int> pList;
-  cout<<"append data=10\n";
+  cout<<"input data=10\n";
   
   pList.append(10);
   for(int i=0;i<pList.getSize();i++){
     cout<<pList[i]<<" ";
   }
   cout<<"\n\n";
-  pList.prepend();
-  cout<<"append data=21\n";
+//  pList.pop();
+  cout<<"input data=21\n";
   pList.append(21);
   for(int i=0;i<pList.getSize();i++){
     cout<<pList[i]<<" ";
@@ -109,7 +109,7 @@ int main(int argc, char** argv) {
   }
   cout<<"\n\n";
   
-  cout<<"append data= 100\n";
+  cout<<"input data= 100\n";
   pList.append(100);
   for(int i=0;i<pList.getSize();i++){
     cout<<pList[i]<<" ";
@@ -138,7 +138,7 @@ int main(int argc, char** argv) {
   cout<<"\n\n";
   
   cout<<"prepend\n";
-  pList.prepend();
+  pList.pop();
   for(int i=0;i<pList.getSize();i++){
     cout<<pList[i]<<" ";
   }
@@ -153,14 +153,21 @@ int main(int argc, char** argv) {
     cout<<pQueue[i]<<" ";
   }
   cout<<"\n\n";
-  pQueue.prepend();
+  pQueue.pop();
   cout<<"append data=21\n";
   pQueue.append(21);
   for(int i=0;i<pQueue.getSize();i++){
     cout<<pQueue[i]<<" ";
   }
   cout<<"\n\n";
-//  pList.prepend();
+  
+  pList.pop();
+  cout<<"pop\n";
+  pQueue.append(21);
+  for(int i=0;i<pQueue.getSize();i++){
+    cout<<pQueue[i]<<" ";
+  }
+  cout<<"\n\n";
   
   cout<<"append data= 4\n";
   pQueue.append(4);
@@ -198,7 +205,7 @@ int main(int argc, char** argv) {
   cout<<"\n\n";
   
   cout<<"prepend\n";
-  pQueue.prepend();
+  pQueue.pop();
   for(int i=0;i<pQueue.getSize();i++){
     cout<<pQueue[i]<<" ";
   }

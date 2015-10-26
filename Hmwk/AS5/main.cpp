@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
   cout<<"create obj copy and copy test\n";
   Vect<int> test(4, 1);
   Vect<int> copy(test);
-  
+  Vect<int> copy1 = copy;
   
   cout<<"output test\n";
   show(test);
@@ -34,8 +34,8 @@ int main(int argc, char** argv) {
   cout<<"first value in copy = "<<copy.first()<<endl;
   cout<<"last value in copy = "<<copy.rear()<<endl;
   
-  cout<<"copy prepend and show\n";
-  copy.prepend();
+  cout<<"copy prepend 123 and show\n";
+  copy.prepend(123);
   show(copy);
   
   cout<<"copy append 3 and show\n";

@@ -36,12 +36,13 @@ protected:
 //  LnkLst(int);
     LnkLst(int, bool);
     void append(T);
-    void prepend();
+    void prepend(T);
     int getSize(){return size;}
     T &operator[](const int&);
     ~LnkLst();
     T previous(int);
     T next(int);
+    void pop();
 };
 
 template <class T>
@@ -78,21 +79,32 @@ void LnkLst<T>::append(T data){
   size++;
 }
 template <class T>
-void LnkLst<T>::prepend(){
-  if(size>0){
-    size--;
-    worker=head;
-    if(size==0){
-      delete head;
-    }
-    else{
-      for(int i=0;i<size-1;i++){
-        worker=worker->next;
-      }
-      delete worker->next;
-    }
+void LnkLst<T>::prepend(T data){
+  if(size==0){
+    head=last = new Node;
+    head->data=data;
   }
-  else empError();
+  else{
+    worker = new Node;
+    worker->data = data;
+    worker->next=head;
+    head=worker;
+  }
+  size++;
+//  if(size>0){
+//    size--;
+//    worker=head;
+//    if(size==0){
+//      delete head;
+//    }
+//    else{
+//      for(int i=0;i<size-1;i++){
+//        worker=worker->next;
+//      }
+//      delete worker->next;
+//    }
+//  }
+//  else empError();
 }
 
 template <class T>
@@ -146,6 +158,24 @@ T LnkLst<T>::next(int index){
     }
     return worker->next->data;
   }
+}
+
+template <class T>
+void LnkLst<T>::pop(){
+  if(size>0){
+    size--;
+    worker=head;
+    if(size==0){
+      delete head;
+    }
+    else{
+      for(int i=0;i<size-1;i++){
+        worker=worker->next;
+      }
+      delete worker->next;
+    }
+  }
+  else empError();  
 }
 #endif	/* LINKED_LIST_H */
 

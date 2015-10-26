@@ -5,8 +5,9 @@
  * Created on October 1, 2015, 10:38 PM
  */
 /* 
- * connect 4 
- * 
+ * connect 4 2 players
+ * board size = 6*7
+ * checkWin = recursion
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,28 +28,24 @@ int main(int argc, char** argv) {
   test.show();
   while(!test.getWin()){
     first?first=false:first=true;
-    getline(cin, temp);
-    
+    do{
+      getline(cin, temp);
+//      cout<<temp;
+    }while(!test.setValid(temp));
+//    cout<<"setboard\n";
     test.setBoard(temp[0]-65, first);
     test.show();
   }
-//  getline(cin, temp);
-  
-  
-  
-  
+
   return 0;
 }
 
-void show(Minesweeper &obj, int index, int position){
-  cout<<"test["<<index<<"] ";
-  switch(position){
-  case 1:
-    cout<<"top = "<<obj.top(index);break;
-  case 2:
-    cout<<"bottom = "<<obj.bottom(index);break;
-  default:
-    cout<<"Error\n";break;
+bool valid(string temp){
+  if(temp.length()!=1){
+    return false;
   }
-  cout<<endl;
+  else if(temp[0]<'A' || temp[0]>'G'){
+    return false;
+  }
+  return true;
 }

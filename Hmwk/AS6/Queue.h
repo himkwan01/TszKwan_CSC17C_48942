@@ -38,7 +38,7 @@ public:
   ~Queue(){}
 //  T &operator[](const int &index);
 //  void append(T);
-  void prepend();
+  void pop();
 //  int getSize(){return size;}
 };
 
@@ -80,7 +80,7 @@ public:
 //  size++;
 //}
 template <class T>
-void Queue<T>::prepend(){
+void Queue<T>::pop(){
   if(this->size>0){
     this->size--;
     this->worker=this->head;

@@ -34,7 +34,8 @@ protected:
 public:
   PriorityLnkLst(){size=0;head=worker=last=NULL;}
   void append(T);
-  void prepend();
+  void prepend(T);
+  void pop();
   int getSize(){return size;}
   ~PriorityLnkLst();
   T &operator[](const int &);
@@ -57,7 +58,22 @@ void PriorityLnkLst<T>::append(T data){
 }
 
 template <class T>
-void PriorityLnkLst<T>::prepend(){
+void PriorityLnkLst<T>::prepend(T data){
+  if(size==0){
+    head=last=new Node;
+    head->data=data;
+  }
+  else{
+    worker = new Node;
+    worker->data=data;
+    worker->next=head;
+    head=worker;
+  }
+  size++;
+}
+
+template <class T>
+void PriorityLnkLst<T>::pop(){
   if(size>0){
     size--;
     worker=head;

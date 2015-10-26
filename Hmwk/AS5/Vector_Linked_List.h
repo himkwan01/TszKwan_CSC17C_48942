@@ -35,8 +35,9 @@ public:
   virtual~Vect();
   // overloading []operator
   T &operator[](const int &index);
+  Vect<T> &operator=(const Vect<T> &);
   void append(T data);
-  void prepend();
+  void prepend(T data);
   //get actual size
   int getSize(){return size;}
   T first();
@@ -149,6 +150,31 @@ T &Vect<T>::operator [](const int& index){
     return worker->data;
   }
 }
+
+template <class T>
+Vect<T> &Vect<T>::operator=(const Vect<T> &a){
+  Node *temp;
+  this->size=a.size;
+  if(size>0){
+    head = new Node;
+    head->next=NULL;
+    last=head;
+    for(int i=1;i<size;i++){
+      last->next = new Node;
+      last=last->next;
+    }
+    worker=head;
+    temp=a.head;
+    for(int i=0;i<size;i++){
+      worker->data=temp->data;
+      worker=worker->next;
+      temp=temp->next;
+    }
+  }
+  else Vect();
+  return *this;
+}
+
 template <class T>
 void Vect<T>::append(T data){
   cout<<"append function/n";
@@ -159,17 +185,28 @@ void Vect<T>::append(T data){
   size++;
 }
 template <class T>
-void Vect<T>::prepend(){
+void Vect<T>::prepend(T data){
   cout<<"prepend function\n";
-  if(size>0){
-    size--;
-    worker=head;
-    for(int i=0;i<size-1;i++){
-      worker=worker->next;
-    }
-    delete worker->next;
+  if(size==0){
+    head=last= new Node;
+    head->data=data;
   }
-  else empError();
+  else{
+    worker = new Node;
+    worker->data=data;
+    worker->next=head;
+    head=worker;
+  }
+  size++;
+//  if(size>0){
+//    size--;
+//    worker=head;
+//    for(int i=0;i<size-1;i++){
+//      worker=worker->next;
+//    }
+//    delete worker->next;
+//  }
+//  else empError();
 }
 template <class T>
 T Vect<T>::first(){

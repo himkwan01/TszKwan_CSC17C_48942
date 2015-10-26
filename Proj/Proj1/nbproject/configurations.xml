@@ -5,7 +5,6 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>Connect_Four.h</itemPath>
-      <itemPath>Minesweeper.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -40,8 +39,6 @@
       </compileType>
       <item path="Connect_Four.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Minesweeper.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -66,8 +63,6 @@
         </asmTool>
       </compileType>
       <item path="Connect_Four.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Minesweeper.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
