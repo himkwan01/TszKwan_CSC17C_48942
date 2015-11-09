@@ -13,7 +13,7 @@
 using namespace std;
 
 //user libraries
-#include "Minesweeper.h"
+//#include "Minesweeper.h"
 #include "Connect_Four.h"
 
 //function prototype

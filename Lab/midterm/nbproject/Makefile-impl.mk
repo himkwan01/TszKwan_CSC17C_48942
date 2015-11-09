@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Mean,Median,Mode STL
+PROJECTNAME=midterm
 
 # Active Configuration
 DEFAULTCONF=Debug

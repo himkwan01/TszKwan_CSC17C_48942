@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Mean,Median,Mode STL
+PROJECTNAME=Conway_Game_of_Life
 
 # Active Configuration
 DEFAULTCONF=Debug

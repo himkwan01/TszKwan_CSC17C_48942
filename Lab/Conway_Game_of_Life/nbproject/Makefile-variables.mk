@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=Cygwin_4.x-Windows
 CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin_4.x-Windows
-CND_ARTIFACT_NAME_Debug=mean_median_mode_stl
-CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin_4.x-Windows/mean_median_mode_stl
+CND_ARTIFACT_NAME_Debug=conway_game_of_life
+CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin_4.x-Windows/conway_game_of_life
 CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin_4.x-Windows/package
-CND_PACKAGE_NAME_Debug=mean,median,modestl.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin_4.x-Windows/package/mean,median,modestl.tar
+CND_PACKAGE_NAME_Debug=conwaygameoflife.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin_4.x-Windows/package/conwaygameoflife.tar
 # Release configuration
 CND_PLATFORM_Release=Cygwin_4.x-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/Cygwin_4.x-Windows
-CND_ARTIFACT_NAME_Release=mean_median_mode_stl
-CND_ARTIFACT_PATH_Release=dist/Release/Cygwin_4.x-Windows/mean_median_mode_stl
+CND_ARTIFACT_NAME_Release=conway_game_of_life
+CND_ARTIFACT_PATH_Release=dist/Release/Cygwin_4.x-Windows/conway_game_of_life
 CND_PACKAGE_DIR_Release=dist/Release/Cygwin_4.x-Windows/package
-CND_PACKAGE_NAME_Release=mean,median,modestl.tar
-CND_PACKAGE_PATH_Release=dist/Release/Cygwin_4.x-Windows/package/mean,median,modestl.tar
+CND_PACKAGE_NAME_Release=conwaygameoflife.tar
+CND_PACKAGE_PATH_Release=dist/Release/Cygwin_4.x-Windows/package/conwaygameoflife.tar
 #
 # include compiler specific variables
 #

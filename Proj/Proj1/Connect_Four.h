@@ -33,6 +33,22 @@ class C4{
   Node *work;
   int count;
   bool win;
+  string p1;
+  string p2;
+  bool valid;
+  
+  T top_left(int index){return operator[](index-col-1);}
+  T top(int index){return operator[](index-col);}
+  T top_right(int index){return operator[](index-col+1);}
+  T left(int index){return operator[](index-1);}
+  T right(int index){return operator[](index+1);}
+  T bottom_left(int index){return operator[](index+col-1);}
+  T bottom(int index){return operator[](index+col);}
+  T bottom_right(int index){return operator[](index+col+1);}
+  void rules();
+  void setNames();
+  string getName(bool first){return (first?p1:p2);}
+  void clr();
 public:
   //default constructor
   C4(){size=row=col=0;}
@@ -49,25 +65,18 @@ public:
    * @param dum
    */
   C4(int row, int col, int dum);
-  virtual ~C4();
+  ~C4();
   int getSize(){return size;}
   int getRow(){return row;}
   int getCol(){return col;}
   T &operator[](const int &index);
-  T top_left(int index){return operator[](index-col-1);}
-  T top(int index){return operator[](index-col);}
-  T top_right(int index){return operator[](index-col+1);}
-  T left(int index){return operator[](index-1);}
-  T right(int index){return operator[](index+1);}
-  T bottom_left(int index){return operator[](index+col-1);}
-  T bottom(int index){return operator[](index+col);}
-  T bottom_right(int index){return operator[](index+col+1);}
   void setBoard(int col, bool first);
   bool setValid(string);
   bool checkWin(int row, int col);
   void show();
   void chkWin(int cRow, int cCol, int oRow, int oCol, int dir, char a, bool opp);
   bool getWin(){return win;}
+  string getName(int a){return (a==1?p1:p2);}
   C4<T> &operator=(const C4<T>&);
 };
 
@@ -94,6 +103,9 @@ C4<T>::C4(int row, int col){
       temp = temp->down;
     }
   }
+//  cout<<"call rules\n";
+  rules();
+  setNames();
 }
 
 template <class T>
@@ -128,11 +140,69 @@ C4<T>::C4(int row, int col, int dum) {
       }
     }
   }
-  cout<<count<<endl;
+  rules();
+  setNames();
+//  cout<<count<<endl;
 }
 
 template <class T>
-virtual C4<T>::~C4(){
+void C4<T>::rules(){
+  cout<<"rules function\n";
+  fstream io;
+  string temp;
+  io.open("Rules.dat", ios::in);
+  if(io){
+    cout<<"open file\n";
+    while(getline(io,temp)){
+      cout<<temp;
+    }
+  }
+  else{
+    cout<<"ERROR: Failed to open rules file\n";
+  }
+}
+
+template <class T>
+void C4<T>::setNames(){
+  do{
+    valid=true;
+    cout<<"Player 1 name : ";
+    getline(cin, p1);
+    if(p1.length()<3 || p1.length()>8){
+      cout<<"Invalid input: input has to be between 3 and 8 characters\n";
+      valid=false;
+    }
+    else{
+      for(int i=0;i<p1.length() && valid;i++){
+        if(!isalpha(p1[i])){
+          valid=false;
+          cout<<"Invalid input: input has to be characters\n";
+        }
+      }
+    }
+  }while(!valid);
+  
+  do{
+    valid=true;
+    cout<<"Player 2 name : ";
+    getline(cin, p2);
+    if(p2.length()<3 || p2.length()>8){
+      cout<<"Invalid input: input has to be between 3 and 8 characters\n";
+      valid=false;
+    }
+    else{
+      for(int i=0;i<p2.length() && valid;i++){
+        if(!isalpha(p2[i])){
+          valid=false;
+          cout<<"Invalid input: input has to be characters\n";
+        }
+      }
+    }
+  }while(!valid);
+}
+
+template <class T>
+C4<T>::~C4(){
   if(size>0){
     work=head;
     for(int i=0;i<size-1;i++){
@@ -528,5 +598,13 @@ C4<T> &C4<T>::operator =(const C4<T>& obj){
   return *this;
 }
 
+template <class T>
+void C4<T>::clr(){
+  work = head;
+  for(int i=0;i<size;i++){
+    work->data = ' ';
+    work = work->next;
+  }
+}
 #endif	/* CONNECT_FOUR_H */
 

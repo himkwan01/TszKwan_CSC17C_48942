@@ -1,0 +1,9 @@
+*********************************************
+*                Connect Four               *
+* Two players take turn to place the disc.  *
+* The one who has four discs in a row       *
+* horizontally, vertically, diagonally win. *
+* Player 1 is X, while player 2 is O.       *
+* Players need to input the row they want   *
+* to place the disc.						*
+*********************************************
