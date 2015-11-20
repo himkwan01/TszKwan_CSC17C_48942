@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=AS7
+PROJECTNAME=Sorting Comparisons
 
 # Active Configuration
 DEFAULTCONF=Debug

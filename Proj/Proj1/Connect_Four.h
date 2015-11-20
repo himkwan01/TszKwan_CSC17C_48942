@@ -21,8 +21,7 @@ class C4{
     Node *prev;
     Node *up;
     Node *down;
-    Node() : index(0), data(' '),next(NULL), prev(NULL), up(NULL), down(NULL) {
-    }
+    Node() : index(0), data(' '),next(NULL), prev(NULL), up(NULL), down(NULL) {}
   };
   int size;
   int row;
@@ -47,8 +46,7 @@ class C4{
   T bottom_right(int index){return operator[](index+col+1);}
   void rules();
   void setNames();
-  string getName(bool first){return (first?p1:p2);}
-  void clr();
+  
 public:
   //default constructor
   C4(){size=row=col=0;}
@@ -76,8 +74,12 @@ public:
   void show();
   void chkWin(int cRow, int cCol, int oRow, int oCol, int dir, char a, bool opp);
   bool getWin(){return win;}
+  void clr();
   string getName(int a){return (a==1?p1:p2);}
   C4<T> &operator=(const C4<T>&);
+  string getName(bool first){return (first?p1:p2);}
+  void quickSort(int start, int end);
+  void stlSort();
 };
 
 template <class T>
@@ -147,12 +149,12 @@ C4<T>::C4(int row, int col, int dum) {
 
 template <class T>
 void C4<T>::rules(){
-  cout<<"rules function\n";
+//  cout<<"rules function\n";
   fstream io;
   string temp;
   io.open("Rules.dat", ios::in);
   if(io){
-    cout<<"open file\n";
+//    cout<<"open file\n";
     while(getline(io,temp)){
       cout<<temp;
     }
@@ -380,7 +382,7 @@ void C4<T>::chkWin(int cRow, int cCol, int oRow, int oCol,
       //terminate win
       if(count==4){
         win=true;
-        goto end;
+        return ;
       }
       if(dir==1){
         //左上右下
@@ -479,7 +481,7 @@ void C4<T>::chkWin(int cRow, int cCol, int oRow, int oCol,
           }
           else{
             win=false;
-            goto end;
+            return ;
           }
         }
       }
@@ -556,15 +558,12 @@ void C4<T>::chkWin(int cRow, int cCol, int oRow, int oCol,
         }
         else{
           win=false;
-          goto end;
+          return ;
         }
       }
       chkWin(cRow, cCol, oRow, oCol, dir, a, opp);
     }//rest move doesn't match
   }
-  
-  end:
-  cout<<"";
 }
 
 template <class T>
@@ -604,6 +603,47 @@ void C4<T>::clr(){
   for(int i=0;i<size;i++){
     work->data = ' ';
     work = work->next;
+  }
+}
+
+template <class T>
+void C4<T>::quickSort(int start, int end){
+  if(start>=end) return;
+  int mid = operator[](end);
+  int left = start;
+  int right = end - 1;
+  while(left<right){
+    while(operator[](left)<mid && left<right){
+      left++;
+    }
+    while(operator[](right)>=mid && left<right){
+      right--;
+    }
+    T temp = operator[](left);
+    operator[](left) = operator[](right);
+    operator[](right) = temp;
+  }
+  if(operator[](left) >= operator[](end)){
+    T temp = operator[](left);
+    operator[](left) = operator[](end);
+    operator[](end) = temp;
+  }
+  else{
+    left++;
+  }
+  quickSort(start, left-1);
+  quickSort(left+1, end);
+}
+
+template <class T>
+void C4<T>::stlSort(){
+  vector<T> temp;
+  for(int i=0;i<size;i++){
+    temp.push_back(operator[](i));
+  }
+  sort(temp.begin(), temp.end());
+  for(int i=0;i<size;i++){
+    operator[](i) = temp[i];
   }
 }
 #endif	/* CONNECT_FOUR_H */

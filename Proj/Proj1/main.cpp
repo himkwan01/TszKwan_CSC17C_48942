@@ -23,20 +23,35 @@ bool valid(string);
 int main(int argc, char** argv) {
   //declare vars
   string temp;
+  bool valid;
   bool first=false;
+  bool repeat=false;
   C4<char> test(6,7);
-  test.show();
-  while(!test.getWin()){
-    first?first=false:first=true;
-    do{
-      getline(cin, temp);
-//      cout<<temp;
-    }while(!test.setValid(temp));
-//    cout<<"setboard\n";
-    test.setBoard(temp[0]-65, first);
+  do{
+    repeat=false;
+    first=false;
     test.show();
-  }
-
+    while(!test.getWin()){
+      first?first=false:first=true;
+      do{
+        getline(cin, temp);
+  //      cout<<temp;
+      }while(!test.setValid(temp));
+  //    cout<<"setboard\n";
+      test.setBoard(temp[0]-65, first);
+      test.show();
+    }
+    test.clr();
+    cout<<test.getName(first)<<" wins!\n";
+    do{
+      valid=true;
+      cout<<"Play again ? (Y/N)";
+      getline(cin,temp);
+      if(temp.length()!=1)valid=false;
+      else if(temp[0]!='Y' && temp[0]!='N')valid=false;
+      else if(temp[0]=='Y')repeat=true;
+    }while(!valid);
+  }while(repeat);
   return 0;
 }
 
